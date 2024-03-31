@@ -1,3 +1,5 @@
+![alt text](https://github.com/michaelfaran/A-Stochastic-Landscape-Approach-for-Protein-Folding-State-Classification/blob/main/SLC_TOC_Image.png?raw=true)
+
 **About:**
 
 This repository contains the code framework and results of the paper **"A Stochastic Landscape Approach for Protein Folding State Classification"**, written by Michael Faran, Dhiman Ray, Shubhadeep Nag, Umberto Raucci, Michele Parrinello, and Gili Bisker.
