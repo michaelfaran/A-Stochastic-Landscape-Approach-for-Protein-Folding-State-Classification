@@ -1,4 +1,7 @@
-![alt text](https://github.com/michaelfaran/A-Stochastic-Landscape-Approach-for-Protein-Folding-State-Classification/blob/main/SLC_TOC_Image.png?raw=true)
+<p align="center">
+  <img src="SLC_TOC_Image.png" >
+</p>
+
 
 **About:**
 
