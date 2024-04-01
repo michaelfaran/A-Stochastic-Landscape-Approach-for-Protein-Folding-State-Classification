@@ -25,8 +25,8 @@ Download the following .m files to the main folder:
 
 - **nmi.m:** <https://www.mathworks.com/matlabcentral/fileexchange/29047-normalized-mutual-information>
 - **Knee\_pt.m:** <https://www.mathworks.com/matlabcentral/fileexchange/35094-knee-point>
-- **munkres.m:** <https://ch.mathworks.com/help/fusion/ref/assignmunkres.html>
-- **clustering\_comparison.m:** <https://www.mathworks.com/help/stats/hierarchical-clustering.html>
+- **munkres.m:** <https://www.mathworks.com/matlabcentral/fileexchange/20328-munkres-assignment-algorithm>
+- **clustering\_comparison.m:** <https://www.mathworks.com/matlabcentral/fileexchange/45222-hierarchical-cluster-comparison>
 - **randindex.m:** <https://www.mathworks.com/matlabcentral/fileexchange/49908-adjusted-rand-index>
 
 **BEAST Algorithm Setup:**
