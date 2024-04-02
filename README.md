@@ -15,9 +15,16 @@ This code was written by Michael Faran, 28/3/2024. For any questions or inquirie
 
 **Software Requirements:**
 
-- Activate the script from its original folder.
 - MATLAB version 23.2 (product number 1) is required.
 - **Statistics and Machine Learning Toolbox** (product number 19) is highly recommended (might work with previous versions but not guaranteed).
+
+**Installation:**
+- Clone or download the repository to a chosen folder.
+- Download the external dependencies and install the BEAST algorithm (see below for more details).
+- Add the dependcies (including the BEAST folder) to the repository chosen folder. 
+- Activate the main script "Protein_state_classification.m" from the repository chosen folder for the two given protein examples.
+- Following the main script, adjust and check the algorithm for your own data.
+
 
 **External Dependencies:**
 
@@ -27,7 +34,6 @@ Download the following .m files to the main folder:
 - **Knee\_pt.m:** <https://www.mathworks.com/matlabcentral/fileexchange/35094-knee-point>
 - **munkres.m:** <https://www.mathworks.com/matlabcentral/fileexchange/20328-munkres-assignment-algorithm>
 - **clustering\_comparison.m:** <https://www.mathworks.com/matlabcentral/fileexchange/45222-hierarchical-cluster-comparison>
-- **randindex.m:** <https://www.mathworks.com/matlabcentral/fileexchange/49908-adjusted-rand-index>
 
 **BEAST Algorithm Setup:**
 
