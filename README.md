@@ -22,7 +22,8 @@ This code was written by Michael Faran, 28/3/2024. For any questions or inquirie
 - Clone or download the repository to a chosen folder.
 - Download the external dependencies and install the BEAST algorithm (see below for more details).
 - Add the dependecies (including the BEAST folder) to the repository chosen folder. 
-- Activate the main script "Protein_state_classification.m" from the repository chosen folder for the two given protein examples.
+- Activate the main script "Protein_state_classification.m" from the repository chosen folder for the two given protein examples. 
+  The default is Trp-Cage, but it can be changed to Chignolin as well (see in the "Protein_state_classification.m" script user inputs section).
 - Following the main script, adjust and check the algorithm for your own data.
 
 
