@@ -21,7 +21,7 @@ This code was written by Michael Faran, 28/3/2024. For any questions or inquirie
 **Installation:**
 - Clone or download the repository to a chosen folder.
 - Download the external dependencies and install the BEAST algorithm (see below for more details).
-- Add the dependcies (including the BEAST folder) to the repository chosen folder. 
+- Add the dependecies (including the BEAST folder) to the repository chosen folder. 
 - Activate the main script "Protein_state_classification.m" from the repository chosen folder for the two given protein examples.
 - Following the main script, adjust and check the algorithm for your own data.
 
@@ -37,13 +37,8 @@ Download the following .m files to the main folder:
 
 **BEAST Algorithm Setup:**
 
-1. Create a subfolder named "Beast" within the main folder.
 1. Download and install the BEAST algorithm .m files following the instructions here: <https://www.mathworks.com/matlabcentral/fileexchange/72515-bayesian-changepoint-detection-time-series-decomposition?s_tid=FX_rc1_behav>
-1. Ensure the subfolder "Beast/Matlab" contains the following functions:
-- beast.m
-- plotbeast.m
-- extractbeast.m
-- installbeast.m
+2. Ensure that the BEAST algorithm can be accessed from the chosen folder, and if needed, add it to the MATLAB path.
 
 **User Inputs:**
 
