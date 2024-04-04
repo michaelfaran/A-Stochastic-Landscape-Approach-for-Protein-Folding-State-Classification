@@ -1,106 +1,106 @@
 % A code for the paper- "A Stochastic Landscape Approach for Protein
-%Folding State Classification", by Michael Faran, Dhiman Ray, Shubhadeep Nag, Umberto Raucci,
-%Michele Parrinello, and Gili Bisker.
-%This code was written by Michael Faran, 28/3/2024
-%For any questions or inquiries, please send an email to: faranmic@mail.tau.ac.il
-
-%User Guide:
-
-%1. Activate this script from the its origin folder. Please Note that
+% Folding State Classification", by Michael Faran, Dhiman Ray, Shubhadeep Nag, Umberto Raucci,
+% Michele Parrinello, and Gili Bisker.
+% This code was written by Michael Faran, 28/3/2024
+% For any questions or inquiries, please send an email to: faranmic@mail.tau.ac.il
+% 
+% User Guide:
+% 
+% 1. Activate this script from the its origin folder. Please Note that
 % this code is working for MATLAB version 23.2 (product number 1), and
 % requires also the 'Statistics and Machine Learning Toolbox'(product
 % number 19). It might work for previous versions, but it is not certain.
-
-%2.Download beforehand to this main folder the following .m files:
-    %a.nmi.m from:
-        %https://www.mathworks.com/matlabcentral/fileexchange/29047-normalized-mutual-information
-    %b.Knee_pt.m from:
-        %https://www.mathworks.com/matlabcentral/fileexchange/35094-knee-point
-    %c. munkres.m from:
-        %https://www.mathworks.com/matlabcentral/fileexchange/20328-munkres-assignment-algorithm
-    %d.clustering_comparison.m from:
-        %https://www.mathworks.com/matlabcentral/fileexchange/45222-hierarchical-cluster-comparison
-    %e.randindex.m from:
-        %https://www.mathworks.com/matlabcentral/fileexchange/130779-rand-and-adjusted-rand-index-calculator-for-cluster-analysis
-    %f. Install to this folder the BEAST algorithm .m files, saving them in a
-        %subfolder of this folder named "Beast" under this folder. Follow the instructions here:
-        %https://www.mathworks.com/matlabcentral/fileexchange/72515-bayesian-changepoint-detection-time-series-decomposition
-        %Be sure to have in the sub folder 'Beast/Matlab' the following functions:
-        % beast.m,plotbeast.m, extractbeast.m and installbeast.m 
-
-%3. The user inputs are assumed to be in the 'Main' folder, where this code
-    %is activated from. They are listed as:
-    %a. CV_Matrix_name-A N*M matrix, where N is the CV trajectory length and M is the
-        %number of CVs to segment
-    %b. M-Insert explictly M as the number of CVs of interest
-    %c. DSI-The downsample index DSI, which the CV needs to be under the length
-        %of 10000 samples (for the BEAST algorithm to converge in a reasonable
-        %time).
-    %d. The ground truth CV-vector- A 1*N vector of the correct state vs.
-         %sample of the protein thoughout its dynamics. It should be a
-         %vector where each sample attain a number correspnding to a
-         %certain state. For example- "Folded" is 1, "Unfolded" is 2,
-         %"Misfolded" is 3. The name of the vector inside the loaded
-         %structure should be "ground_truth_vec". We will use "0" as
-         %the label for unclassified samples.
-    %e. Protein_name- a string containing the protein name. As
-         %examples or test cases, there are two proteinד-the Chingolin and the Trp
-         %Cage.
-    %f. N_states- The number of protein states in the groun truth vector.
-
-%4. The code outputs are for each CV seperately (i index runs from i=1...M for each CV), assuming for
-    % simplictly the protein name is "Protein_name":
-
-    %a. "BEAST_RAW_Protein_name_New_i"- The raw CV data figure, with the
-        %trend changepoints marks detected by the BEAST algorithm.
-    %b. "SLM_Clustering_Protein_namen_New_No_color_i"- The yielded stochastic landscape, after 
-        %PCA and normalization, with the no cluster color marks on the
-        %segment data (The segments are points in this space). 
-    %c."Stochastic_Landscape_Unnormalized_Matrixi"- The raw segment data
-        % of the segments stochastic coordinates for CV i
-    %d. "SLM_Clustering_Protein_name_New_i"- The yielded stochastic landscape, after 
-        %PCA and normalization, with the cluster color marks on the
-        %segment data (The segments are points in this space).
-    %e. "Stochastic_Landscape_PCA_Matrixi"- The PCA result on the
-        %normalized segment data, which is projected later into the stochastic
-        %landscape in the .png file of
-        %"SLM_Clustering_Protein_name_New_No_color_i"
-    %f. "BEAST_Summary_Protein_name_New_i"- The CV data clustered according to
-        %the DBSCAN algorithm, with vertical lines indicating the trend
-        %changepoints times along the CV.
-    %g. "CV_vs_time_Protein_name_New_i"-  Protein state labeling, determined by the Kuhn-Munkres 
-        %algorithm applied to the DBSCAN clustering results, projected onto
-        %the original CV trajectory. This is the main output of interest
-        %in a "black box" manner.
-    %h."BEAST_Summary_Protein_name_New_i_workspace"- The MATLAB workspace in
-        %the end of the run for each CV i
-    %i. "Truth_mat"- The coed output of all the classification matrices 
-        % (NMI  RI  ARI  Dice  FM  Jaccard), compared with the ground truth,
-        % The rows correspond to each CV by their order in the input matrix
-        % ("CV_Matrix_name").
-
-%Please refer to the paper for additional details, and examaine the repository:
+% 
+% 2.Download beforehand to this main folder the following .m files:
+%     a.nmi.m from:
+%         https://www.mathworks.com/matlabcentral/fileexchange/29047-normalized-mutual-information
+%     b.Knee_pt.m from:
+%         https://www.mathworks.com/matlabcentral/fileexchange/35094-knee-point
+%     c. munkres.m from:
+%         https://www.mathworks.com/matlabcentral/fileexchange/20328-munkres-assignment-algorithm
+%     d.clustering_comparison.m from:
+%         https://www.mathworks.com/matlabcentral/fileexchange/45222-hierarchical-cluster-comparison
+%     e.randindex.m from:
+%         https://www.mathworks.com/matlabcentral/fileexchange/130779-rand-and-adjusted-rand-index-calculator-for-cluster-analysis
+%     f. Install to this folder the BEAST algorithm .m files, saving them in a
+%         subfolder of this folder named "Beast" under this folder. Follow the instructions here:
+%         https://www.mathworks.com/matlabcentral/fileexchange/72515-bayesian-changepoint-detection-time-series-decomposition
+%         Be sure to have in the sub folder 'Beast/Matlab' the following functions:
+%         beast.m,plotbeast.m, extractbeast.m and installbeast.m 
+% 
+% 3. The user inputs are assumed to be in the 'Main' folder, where this code
+%     is activated from. They are listed as:
+%     a. CV_Matrix_name-A N*M matrix, where N is the CV trajectory length and M is the
+%         number of CVs to segment
+%     b. M-Insert explictly M as the number of CVs of interest
+%     c. DSI-The downsample index DSI, which the CV needs to be under the length
+%         of 10000 samples (for the BEAST algorithm to converge in a reasonable
+%         time).
+%     d. The ground truth CV-vector- A 1*N vector of the correct state vs.
+%          sample of the protein thoughout its dynamics. It should be a
+%          vector where each sample attain a number correspnding to a
+%          certain state. For example- "Folded" is 1, "Unfolded" is 2,
+%          "Misfolded" is 3. The name of the vector inside the loaded
+%          structure should be "ground_truth_vec". We will use "0" as
+%          the label for unclassified samples.
+%     e. Protein_name- a string containing the protein name. As
+%          examples or test cases, there are two proteins-the Chingolin and the Trp
+%          Cage.
+%     f. N_states- The number of protein states in the groun truth vector.
+% 
+% 4. The code outputs are for each CV seperately (i index runs from i=1...M for each CV), assuming for
+%     simplictly the protein name is "Protein_name":
+% 
+%     a. "BEAST_RAW_Protein_name_New_i"- The raw CV data figure, with the
+%         trend changepoints marks detected by the BEAST algorithm.
+%     b. "SLM_Clustering_Protein_namen_New_No_color_i"- The yielded stochastic landscape, after 
+%         PCA and normalization, with the no cluster color marks on the
+%         segment data (The segments are points in this space). 
+%     c."Stochastic_Landscape_Unnormalized_Matrixi"- The raw segment data
+%         of the segments stochastic coordinates for CV i
+%     d. "SLM_Clustering_Protein_name_New_i"- The yielded stochastic landscape, after 
+%         PCA and normalization, with the cluster color marks on the
+%         segment data (The segments are points in this space).
+%     e. "Stochastic_Landscape_PCA_Matrixi"- The PCA result on the
+%         normalized segment data, which is projected later into the stochastic
+%         landscape in the .png file of
+%         "SLM_Clustering_Protein_name_New_No_color_i"
+%     f. "BEAST_Summary_Protein_name_New_i"- The CV data clustered according to
+%         the DBSCAN algorithm, with vertical lines indicating the trend
+%         changepoints times along the CV.
+%     g. "CV_vs_time_Protein_name_New_i"-  Protein state labeling, determined by the Kuhn-Munkres 
+%         algorithm applied to the DBSCAN clustering results, projected onto
+%         the original CV trajectory. This is the main output of interest
+%         in a "black box" manner.
+%     h."BEAST_Summary_Protein_name_New_i_workspace"- The MATLAB workspace in
+%         the end of the run for each CV i
+%     i. "Truth_mat"- The coed output of all the classification matrices 
+%         (NMI  RI  ARI  Dice  FM  Jaccard), compared with the ground truth,
+%         The rows correspond to each CV by their order in the input matrix
+%         ("CV_Matrix_name").
+% 
+% Please refer to the paper for additional details, and examaine the repository:
 % "https://github.com/luigibonati/deep-learning-slow-modes"
-
-%References:
-
-%This code uses the BEAST algorithmas a baseline-
+% 
+% References:
+% 
+% This code uses the BEAST algorithmas a baseline-
 % Zhao, Kaiguang, et al. "Detecting change-point, trend, and seasonality in satellite time series data
 % to track abrupt changes and nonlinear dynamics: A Bayesian ensemble algorithm." Remote sensing of Environment 232 (2019): 111181.
-%in conjuction with the Stochastic Landscape, first published in:
-%Faran, Michael, and Gili Bisker. "Nonequilibrium Self-Assembly Time Forecasting by the Stochastic Landscape Method." The Journal of Physical Chemistry B 127.27 (2023): 6113-6124.
+% in conjuction with the Stochastic Landscape, first published in:
+% Faran, Michael, and Gili Bisker. "Nonequilibrium Self-Assembly Time Forecasting by the Stochastic Landscape Method." The Journal of Physical Chemistry B 127.27 (2023): 6113-6124.
 % On protein folding MD collective variables data, published in:
-%Ray, D.; Trizio, E.; Parrinello, M. Deep learning collective variables from transition
-%path ensemble. The Journal of Chemical Physics 2023, 158, 204102
-%Bonati, Luigi, GiovanniMaria Piccini, and Michele Parrinello. "Deep learning the slow modes for rare events sampling."
-%Proceedings of the National Academy of Sciences 118.44 (2021): e2113533118.
+% Ray, D.; Trizio, E.; Parrinello, M. Deep learning collective variables from transition
+% path ensemble. The Journal of Chemical Physics 2023, 158, 204102
+% Bonati, Luigi, Giovanni,Maria Piccini, and Michele Parrinello. "Deep learning the slow modes for rare events sampling."
+% Proceedings of the National Academy of Sciences 118.44 (2021): e2113533118.
 
 %User inputs (put the CV_Matrix_name.mat in the 'Main' folder):
-CV_Matrix_name='CVs_Trp_Cage.mat';%CV_Matrix_name-A N*M matrix
-ground_truth_vec_name='GT_Tr_cage.mat';
+CV_Matrix_name='CVs_Trp_Cage.mat';%CV_Matrix_name-A N*M matrix, change to CVs_Chignolin.mat for the second shared example.
+ground_truth_vec_name='GT_Tr_cage.mat'; %Change to GT_Chingolin.mat for the second shared example.
 M=9; %Number of CVs
 DSI=1;%The downsample index
-Protein_name='Trp_Cage'; %A string containing the protein name.
+Protein_name='Trp_Cage'; %A string containing the protein name. Change to Chignolin for the second shared example.
 N_states=3; %Number of states in the ground truth
 
 load(ground_truth_vec_name); %The ground truth CV-vector
