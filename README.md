@@ -8,6 +8,7 @@
 **About:**
 
 This repository contains the code framework and results of the paper **"A Stochastic Landscape Approach for Protein Folding State Classification"**, written by Michael Faran, Dhiman Ray, Shubhadeep Nag, Umberto Raucci, Michele Parrinello, and Gili Bisker.
+The paper can be found here: <https://pubs.acs.org/doi/full/10.1021/acs.jctc.4c00464>.
 
 The paper introduces the Stochastic Landscape Classification (SLC), an innovative, automated, non-learning algorithm that classifies protein folding dynamics trajectories into different macro-states – dwelling epochs met along the protein's folding pathway. This is achieved by classifying collective variables (CVs) trajectories – low-dimensional representations of complex dynamical systems like molecular dynamics (MD) of macromolecules. The SLC segments the CVs into distinct macro-states, revealing the protein folding pathway realized by MD simulations. The segmentation is achieved by analyzing changes in CV trends, and clustering these segments using a standard density-based spatial clustering of applications with noise (DBSCAN) scheme.
 
